@@ -1,4 +1,6 @@
 #pragma once
+#include "qParticle.h"
+#include <vector>
 
 namespace chargedfriction {
 
@@ -575,6 +577,7 @@ namespace chargedfriction {
 #pragma endregion
 		private:
 			bool paused;
+			qParticle *q;
 
 		private: System::Void set_enabled(bool);
 		private: System::Void graph_change(System::Object^  sender, System::EventArgs^  e);

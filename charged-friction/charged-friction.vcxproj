@@ -127,6 +127,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="qParticle.cpp" />
+    <ClCompile Include="RungeKutta.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +140,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="qParticle.h" />
+    <ClInclude Include="RungeKutta.h" />
     <ClInclude Include="Window.h">
       <FileType>CppForm</FileType>
     </ClInclude>

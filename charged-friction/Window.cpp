@@ -44,6 +44,19 @@ namespace chargedfriction {
 			// Добавление первой точки на графики
 			chart1->Series[0]->Points->AddXY((double)initial_x->Value, (double)initial_y->Value);
 			chart2->Series[0]->Points->AddXY((double)initial_x->Value, (double)initial_z->Value);
+
+			// Создание частицы и задание начальных условий
+			q = new qParticle((double)val_charge->Value, (double)val_E->Value, (double)val_B->Value, (double)val_angle->Value);
+			
+			std::vector<double> Y0(6);
+			Y0[0] = (double)initial_x->Value;
+			Y0[1] = (double)initial_y->Value;
+			Y0[2] = (double)initial_z->Value;
+			Y0[3] = (double)velocity_x->Value;
+			Y0[4] = (double)velocity_y->Value;
+			Y0[5] = (double)velocity_z->Value;
+
+			q->SetInit(0, Y0);
 		}
 		else {
 			timer1->Enabled = true;
@@ -60,6 +73,13 @@ namespace chargedfriction {
 			set_enabled(true);
 			paused = false;
 			stop_button->Text = "Пауза";
+
+			chart1->Series[0]->Points->Clear();
+			chart2->Series[0]->Points->Clear();
+			chart1->Series[1]->Points->Clear();
+			chart2->Series[1]->Points->Clear();
+
+			q = 0;
 		}
 		else {
 			timer1->Enabled = false;
@@ -71,10 +91,12 @@ namespace chargedfriction {
 
 	System::Void Window::timer1_Tick(System::Object ^ sender, System::EventArgs ^ e)
 	{
-		static double x,y,z;
-		x += 1;
-		y = Math::Cos(x);
-		z = Math::Sin(x);
+		q->NextStep((double)timer1->Interval / 1000.0);
+
+		double x,y,z;
+		x = q->get_x();
+		y = q->get_y();
+		z = q->get_z();
 
 		chart1->Series["Particle"]->Points->Clear();
 		chart2->Series["Particle"]->Points->Clear();
